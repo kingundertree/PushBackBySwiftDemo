@@ -90,8 +90,9 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
                 backGroundImg?.removeFromSuperview()
             }
             
-            backGroundImg = UIImageView(frame: frame)
-//            backGroundImg?.image = capImageArr?.lastObject
+            var img:UIImage = (self.capImageArr!.lastObject) as UIImage
+            backGroundImg = UIImageView(image: img)
+            backGroundImg!.frame = frame
             backGroundView?.insertSubview(backGroundImg, belowSubview: maskCover)
             
             break;
@@ -100,11 +101,16 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
                 UIView.animateWithDuration(0.3, animations: {
                     self.moveToX(ScreenWidth)
                     }, completion: { (finished: Bool) -> Void in
-                        if(self.isPopToRoot){
-                            self.popToRootViewControllerAnimated(false)
-                        }else{
-                            self.popViewControllerAnimated(false)
-                        }
+                        self.popViewControllerAnimated(false)
+
+//                        if(self.isPopToRoot){
+//                            self.popToRootViewControllerAnimated(false)
+//                        }else{
+//                            self.popViewControllerAnimated(false)
+//                        }
+                        var frame:CGRect = self.view.frame;
+                        frame.origin.x = 0;
+                        self.view.frame = frame;
                     })
             }else{
                 UIView.animateWithDuration(0.3, animations: {
@@ -194,7 +200,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
 
             return img
         }else{
-            var screenWindow:UIWindow = UIWindow()
+            var screenWindow:UIWindow = UIApplication.sharedApplication().keyWindow
             UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0)
             screenWindow.layer.renderInContext(UIGraphicsGetCurrentContext())
             var img:UIImage = UIGraphicsGetImageFromCurrentImageContext()
