@@ -8,14 +8,16 @@
 
 import UIKit
 //定义屏幕高度
-let ScreenHeight = UIScreen.mainScreen().bounds.size.height
+let ScreenHeight:Float = UIScreen.mainScreen().bounds.size.height
 //定义屏幕宽度
-let ScreenWidth =  UIScreen.mainScreen().bounds.size.width
+let ScreenWidth:Float =  UIScreen.mainScreen().bounds.size.width
 
 class MainViewController: UIViewController {
+    var detailVC:DetailViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "你好！"
         self.view.backgroundColor = UIColor.whiteColor()!
 
@@ -39,7 +41,8 @@ class MainViewController: UIViewController {
 
     func btnClick(sender: UIButton){
         print("push demo \n")
-        var detailVC = DetailViewController()
+        detailVC = DetailViewController()
+        
         self.navigationController.pushViewController(detailVC, animated: true)
     }
     

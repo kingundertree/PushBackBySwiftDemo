@@ -9,10 +9,13 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    var detailVC:DetailViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController
+        
         self.title = "Detail Page"
         self.view.backgroundColor = UIColor.whiteColor()!
         
@@ -30,12 +33,30 @@ class DetailViewController: UIViewController {
         btn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btn.addTarget(self, action: "btnClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btn)
+
+        let bcakBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        bcakBtn.frame = CGRectMake(0, 420, ScreenWidth, 45);
+        bcakBtn.backgroundColor = UIColor.blueColor()
+        bcakBtn.setTitle("pop back", forState: UIControlState.Normal)
+        bcakBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        bcakBtn.addTarget(self, action: "popBack:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(bcakBtn)
     }
 
     func btnClick(sender: UIButton){
         print("push demo \n")
-        var detailVC = DetailViewController()
+        detailVC = DetailViewController()
+
         self.navigationController.pushViewController(detailVC, animated: true)
+    }
+    
+    func popBack(sender: UIButton){
+        print("push demo \n")
+//        self.navigationController.popViewControllerAnimated(true)
+    }
+    
+    func goBack(animated:Bool){
+//        self.navigationController.popViewControllerAnimated(animated)
     }
     
     override func didReceiveMemoryWarning() {
