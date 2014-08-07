@@ -143,6 +143,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
         if(self.pushBackType == PushBckType.PushBackWithSlowMove){
             var leftX:CGFloat = (frameX - ScreenWidth) * 0.3
             frame.origin.x = leftX
+            backGroundView.frame = frame
         }else{
             var scale:CGFloat = frameX/(ScreenWidth*20) + 0.95
             self.backGroundView!.transform = CGAffineTransformMakeScale(scale, scale)
