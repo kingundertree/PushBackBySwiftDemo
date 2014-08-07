@@ -22,11 +22,11 @@ enum PushBckType{
 
 class PushBackNavViewController: UINavigationController,UIGestureRecognizerDelegate,UINavigationControllerDelegate {
     //enum 值
-    var captureType:CaptureType! = CaptureType.CaptureTypeWithView
-    var pushBackType:PushBckType! = PushBckType.PushBackWithScale
+    var captureType:CaptureType = CaptureType.CaptureTypeWithView
+    var pushBackType:PushBckType = PushBckType.PushBackWithSlowMove
     //手势相关
-    var disablePushBack:Bool! = true
-    var isPopToRoot:Bool! = false
+    var disablePushBack:Bool = true
+    var isPopToRoot:Bool = false
     //其他
     var startX:CGFloat! = 0.0
     var capImageArr:NSMutableArray! = NSMutableArray(capacity: 100)
@@ -35,7 +35,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
     var maskCover:UIView!
     var backGroundView:UIView!
     var pushNum:Int! = 0
-    var isMoving:Bool! = false
+    var isMoving:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +56,8 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer!, shouldReceiveTouch touch: UITouch!) -> Bool {
         println("参数---->>\(self.capImageArr!.count)...\(self.disablePushBack)...\(self.isMoving)")
         if(self.capImageArr!.count < 1 ||
-            self.disablePushBack == true ||
-            self.isMoving == true){
+            self.disablePushBack ||
+            self.isMoving){
             return false
         }
         return true
@@ -101,7 +101,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
                     self.moveToX(ScreenWidth)
                     }, completion: { (finished: Bool) -> Void in
                         println("self.isPopToRoot--->>\(self.isPopToRoot)")
-                        if(self.isPopToRoot == true){
+                        if(self.isPopToRoot){
                             self.popToRootViewControllerAnimated(false)
                         }else{
                             self.popViewControllerAnimated(false)

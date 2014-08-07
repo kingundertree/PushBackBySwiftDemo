@@ -22,9 +22,9 @@ class DetailViewController: UIViewController {
         
         let lab = UILabel(frame: CGRectMake(0, 64, ScreenWidth, 280))
         lab.backgroundColor = UIColor.grayColor()
-        lab.text = "!";
+        lab.text = "哒"
         lab.font = UIFont.boldSystemFontOfSize(220)
-        lab.textAlignment = NSTextAlignment.Center;
+        lab.textAlignment = NSTextAlignment.Center
         self.view.addSubview(lab)
         
         let btn = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -43,7 +43,6 @@ class DetailViewController: UIViewController {
         bcakBtn.addTarget(self, action: "popBack:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(bcakBtn)
     
-        
         let nav:PushBackNavViewController = self.navigationController as PushBackNavViewController
         let arr:NSMutableArray = nav.capImageArr
         println("arr--->>\(arr.count)")
@@ -64,11 +63,10 @@ class DetailViewController: UIViewController {
     
     func popBack(sender: UIButton){
         print("push demo \n")
-//        self.navigationController.popViewControllerAnimated(true)
+        self.navigationController.popViewControllerAnimated(true)
     }
     
-    func goBack(animated:Bool){
-//        self.navigationController.popViewControllerAnimated(animated)
+    func goBack(animated:Bool){        self.navigationController.popViewControllerAnimated(animated)
     }
     
     override func didReceiveMemoryWarning() {

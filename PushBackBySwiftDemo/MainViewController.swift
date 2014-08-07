@@ -24,7 +24,7 @@ class MainViewController: UIViewController {
 
         let lab = UILabel(frame: CGRectMake(0, 64, ScreenWidth, 260))
         lab.backgroundColor = UIColor.grayColor()
-        lab.text = "虎";
+        lab.text = "么";
         lab.font = UIFont.boldSystemFontOfSize(220)
         lab.textAlignment = NSTextAlignment.Center;
         self.view.addSubview(lab)
