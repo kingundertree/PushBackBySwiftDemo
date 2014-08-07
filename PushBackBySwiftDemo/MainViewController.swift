@@ -8,9 +8,10 @@
 
 import UIKit
 //定义屏幕高度
-let ScreenHeight:Float = UIScreen.mainScreen().bounds.size.height
+let ScreenHeight:CGFloat = UIScreen.mainScreen().bounds.size.height
 //定义屏幕宽度
-let ScreenWidth:Float =  UIScreen.mainScreen().bounds.size.width
+let ScreenWidth:CGFloat =  UIScreen.mainScreen().bounds.size.width
+
 
 class MainViewController: UIViewController {
     var detailVC:DetailViewController?
@@ -35,6 +36,16 @@ class MainViewController: UIViewController {
         btn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btn.addTarget(self, action: "btnClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btn)
+        
+        let nav:PushBackNavViewController = self.navigationController as PushBackNavViewController
+        let arr:NSMutableArray = nav.capImageArr
+        println("arr--->>\(arr.count)")
+        if(arr.count >= 1){
+            let img:UIImage = arr.lastObject as UIImage
+            let imgView:UIImageView = UIImageView(frame: CGRectMake(0, 100, 150, 250))
+            imgView.image = img
+            self.view.addSubview(imgView)
+        }
         
         // Do any additional setup after loading the view.
     }

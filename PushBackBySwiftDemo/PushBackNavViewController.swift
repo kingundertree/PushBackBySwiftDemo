@@ -8,7 +8,7 @@
 
 import UIKit
 
-let moveProportion:Float = 0.7
+let moveProportion:CGFloat = 0.7
 
 enum CaptureType{
     case CaptureTypeWithView
@@ -23,17 +23,17 @@ enum PushBckType{
 class PushBackNavViewController: UINavigationController,UIGestureRecognizerDelegate,UINavigationControllerDelegate {
     //enum 值
     var captureType:CaptureType! = CaptureType.CaptureTypeWithView
-    var pushBackType:PushBckType! = PushBckType.PushBackWithSlowMove
+    var pushBackType:PushBckType! = PushBckType.PushBackWithScale
     //手势相关
     var disablePushBack:Bool! = true
     var isPopToRoot:Bool! = false
     //其他
-    var startX:Float! = 0.0
+    var startX:CGFloat! = 0.0
     var capImageArr:NSMutableArray! = NSMutableArray(capacity: 100)
     
-    var backGroundImg:UIImageView?
-    var maskCover:UIView?
-    var backGroundView:UIView?
+    var backGroundImg:UIImageView!
+    var maskCover:UIView!
+    var backGroundView:UIView!
     var pushNum:Int! = 0
     var isMoving:Bool! = false
     
@@ -54,9 +54,10 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
 
     //pragma -mark UIGurstureDelegate
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer!, shouldReceiveTouch touch: UITouch!) -> Bool {
-        if(capImageArr?.count < 1 ||
-            self.disablePushBack ||
-            isMoving){
+        println("参数---->>\(self.capImageArr!.count)...\(self.disablePushBack)...\(self.isMoving)")
+        if(self.capImageArr!.count < 1 ||
+            self.disablePushBack == true ||
+            self.isMoving == true){
             return false
         }
         return true
@@ -71,28 +72,27 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
 
         switch(status){
         case UIGestureRecognizerState.Began:
-            startX = panPoint.x
-            if(backGroundView){
-                backGroundView?.removeFromSuperview()
+            self.startX = panPoint.x
+            if(self.backGroundView){
+                self.backGroundView?.removeFromSuperview()
             }
-            backGroundView = UIView(frame: frame)
-            self.view.superview.insertSubview(backGroundView, belowSubview: self.view)
+            self.backGroundView = UIView(frame: frame)
+            self.view.superview!.insertSubview(self.backGroundView, belowSubview: self.view)
             
-            if(!maskCover){
-                maskCover = UIView(frame: frame)
-//                maskCover?.backgroundColor = UIColor.clearColor()
-//                maskCover?.backgroundColor = UIColor!.blackColor()
-                backGroundView?.addSubview(maskCover)
+            if(!self.maskCover){
+                self.maskCover = UIView(frame: frame)
+                self.maskCover?.backgroundColor = UIColor.blackColor()
+                self.backGroundView?.addSubview(self.maskCover)
             }
             
-            if(backGroundImg){
-                backGroundImg?.removeFromSuperview()
+            if(self.backGroundImg){
+                self.backGroundImg?.removeFromSuperview()
             }
             
             var img:UIImage = (self.capImageArr!.lastObject) as UIImage
-            backGroundImg = UIImageView(image: img)
-            backGroundImg!.frame = frame
-            backGroundView?.insertSubview(backGroundImg, belowSubview: maskCover)
+            self.backGroundImg = UIImageView(image: img)
+            self.backGroundImg!.frame = frame
+            self.backGroundView?.insertSubview(self.backGroundImg, belowSubview: self.maskCover)
             
             break;
         case UIGestureRecognizerState.Ended:
@@ -100,13 +100,12 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
                 UIView.animateWithDuration(0.3, animations: {
                     self.moveToX(ScreenWidth)
                     }, completion: { (finished: Bool) -> Void in
-                        self.popViewControllerAnimated(false)
-
-//                        if(self.isPopToRoot){
-//                            self.popToRootViewControllerAnimated(false)
-//                        }else{
-//                            self.popViewControllerAnimated(false)
-//                        }
+                        println("self.isPopToRoot--->>\(self.isPopToRoot)")
+                        if(self.isPopToRoot == true){
+                            self.popToRootViewControllerAnimated(false)
+                        }else{
+                            self.popViewControllerAnimated(false)
+                        }
                         var frame:CGRect = self.view.frame;
                         frame.origin.x = 0;
                         self.view.frame = frame;
@@ -130,76 +129,65 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
         
     }
 
-    func moveToX(x: Float){
-//        println("moveToX---(x:int)")
-        var frameX:Float = 0
+    func moveToX(x: CGFloat){
+        var frameX:CGFloat = 0
         frameX = (x >= ScreenWidth ? ScreenWidth : x);
         frameX = (x < 0 ? 0 : x);
         var frame:CGRect = self.view.frame
-        var alphaF:Float = 0.5 - frameX/800
+        var alphaF:CGFloat = 0.5 - frameX/800
         
         frame.origin.x = frameX
         self.view.frame = frame
-//        maskCover?.alpha = alphaF
+        self.maskCover?.alpha = alphaF
 
-        var scale:CGFloat = frameX/(ScreenWidth*20) + 0.95
-        backGroundView!.transform = CGAffineTransformMakeScale(scale, scale)
-
-//        if(self.pushBackType == PushBckType.PushBackWithSlowMove){
-//            var leftX:Float = (frameX - ScreenWidth) * 0.3
-//            frame.origin.x = leftX
-//        }else{
-//            var scale:CGFloat = frameX/(ScreenWidth*20) + 0.95
-//            backGroundView!.transform = CGAffineTransformMakeScale(scale, scale)
-//        }
+        if(self.pushBackType == PushBckType.PushBackWithSlowMove){
+            var leftX:CGFloat = (frameX - ScreenWidth) * 0.3
+            frame.origin.x = leftX
+        }else{
+            var scale:CGFloat = frameX/(ScreenWidth*20) + 0.95
+            self.backGroundView!.transform = CGAffineTransformMakeScale(scale, scale)
+        }
     }
     
     
     //pragma mark -popView
     override func popViewControllerAnimated(animated: Bool) -> UIViewController! {
-        if(capImageArr?.count >= 1){
-            capImageArr?.removeLastObject()
+        if(!isMoving){
+            self.isMoving = true
+            if(self.capImageArr!.count >= 1){
+                self.capImageArr!.removeLastObject()
+            }
+            println("pop--->>\(self.capImageArr.count)")
+            return super.popViewControllerAnimated(animated)
+            
+        }else{
+            return nil
         }
-        println("self--->>\(self) \(super.popViewControllerAnimated(animated))")
-        return super.popViewControllerAnimated(animated)
-        
-//        if(!isMoving){
-//            isMoving = true
-//            if(capImageArr?.count >= 1){
-//                capImageArr?.removeLastObject()
-//            }
-//            println("self--->>\(self) \(super.popViewControllerAnimated(animated))")
-//            return super.popViewControllerAnimated(animated)
-//            
-//        }else{
-//            return nil
-//        }
     }
     
     override func popToRootViewControllerAnimated(animated: Bool) -> [AnyObject]! {
-        capImageArr?.removeAllObjects()
+        self.capImageArr!.removeAllObjects()
         return popToRootViewControllerAnimated(animated)
     }
     
     
     override func pushViewController(viewController: UIViewController!, animated: Bool) {
-        capImageArr?.addObject(self.capture())
-        pushNum = pushNum + 1;
-        return super.pushViewController(viewController, animated: animated)
-
-//        if(!isMoving){
-//            isMoving = true
-//            if(pushNum != 0){
-//                capImageArr?.addObject(self.capture())
-//                pushNum = pushNum + 1;
-//                return super.pushViewController(viewController, animated: animated)
-//            }else{
-//                pushNum = pushNum + 1;
-//                return super.pushViewController(viewController, animated: animated)
-//            }
-//        }else{
-//            return super.pushViewController(viewController, animated: animated)
-//        }
+        if(!self.isMoving){
+            self.isMoving = true
+            if(self.pushNum != 0){
+                self.capImageArr!.addObject(self.capture())
+                self.pushNum = self.pushNum + 1;
+                println("pushNum----1>>\(pushNum)...\(self.viewControllers.count)")
+                
+                return super.pushViewController(viewController, animated: animated)
+            }else{
+                self.pushNum = self.pushNum + 1;
+                println("pushNum----2>>\(pushNum)")
+                return super.pushViewController(viewController, animated: animated)
+            }
+        }else{
+            return super.pushViewController(viewController, animated: animated)
+        }
     }
 
     func capture() -> UIImage!{
@@ -226,7 +214,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
     }
     
     func navigationController(navigationController: UINavigationController!, didShowViewController viewController: UIViewController!, animated: Bool) {
-        isMoving = false
+        self.isMoving = false
     }
     
     override func didReceiveMemoryWarning() {

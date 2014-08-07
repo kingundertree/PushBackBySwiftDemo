@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DetailViewController: UIViewController {
     var detailVC:DetailViewController?
 
@@ -41,6 +42,17 @@ class DetailViewController: UIViewController {
         bcakBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         bcakBtn.addTarget(self, action: "popBack:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(bcakBtn)
+    
+        
+        let nav:PushBackNavViewController = self.navigationController as PushBackNavViewController
+        let arr:NSMutableArray = nav.capImageArr
+        println("arr--->>\(arr.count)")
+        if(arr.count >= 1){
+            let img:UIImage = arr.lastObject as UIImage
+            let imgView:UIImageView = UIImageView(frame: CGRectMake(0, 100, 150, 250))
+            imgView.image = img
+            self.view.addSubview(imgView)
+        }
     }
 
     func btnClick(sender: UIButton){
