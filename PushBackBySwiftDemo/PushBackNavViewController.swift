@@ -73,19 +73,19 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
         switch(status){
         case UIGestureRecognizerState.Began:
             self.startX = panPoint.x
-            if(self.backGroundView){
+            if((self.backGroundView) != nil){
                 self.backGroundView?.removeFromSuperview()
             }
             self.backGroundView = UIView(frame: frame)
             self.view.superview!.insertSubview(self.backGroundView, belowSubview: self.view)
             
-            if(!self.maskCover){
+            if(self.maskCover == nil){
                 self.maskCover = UIView(frame: frame)
                 self.maskCover?.backgroundColor = UIColor.blackColor()
                 self.backGroundView?.addSubview(self.maskCover)
             }
             
-            if(self.backGroundImg){
+            if(self.backGroundImg != nil){
                 self.backGroundImg?.removeFromSuperview()
             }
             
@@ -152,7 +152,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
     
     
     //pragma mark -popView
-    override func popViewControllerAnimated(animated: Bool) -> UIViewController! {
+    override func popViewControllerAnimated(animated: Bool) -> UIViewController? {
         if(!isMoving){
             self.isMoving = true
             if(self.capImageArr!.count >= 1){
@@ -166,13 +166,12 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
         }
     }
     
-    override func popToRootViewControllerAnimated(animated: Bool) -> [AnyObject]! {
+    override func popToRootViewControllerAnimated(animated: Bool) -> [AnyObject]? {
         self.capImageArr!.removeAllObjects()
         return popToRootViewControllerAnimated(animated)
     }
     
-    
-    override func pushViewController(viewController: UIViewController!, animated: Bool) {
+    override func pushViewController(viewController: UIViewController, animated: Bool) {
         if(!self.isMoving){
             self.isMoving = true
             if(self.pushNum != 0){

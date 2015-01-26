@@ -14,7 +14,7 @@
 		<string>https://github.com/kingundertree/PushBackBySwiftDemo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>PushBackBySwiftDemo.xcodeproj/project.xcworkspace</string>
+	<string>PushBackBySwiftDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A588A5EAF938A431AB8E84C87FB165FAE00ABF28</key>

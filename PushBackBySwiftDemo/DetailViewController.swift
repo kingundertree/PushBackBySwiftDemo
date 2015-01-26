@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
         self.navigationController
         
         self.title = "Detail Page"
-        self.view.backgroundColor = UIColor.whiteColor()!
+        self.view.backgroundColor = UIColor.whiteColor()
         
         let lab = UILabel(frame: CGRectMake(0, 64, ScreenWidth, 280))
         lab.backgroundColor = UIColor.grayColor()
@@ -58,15 +58,16 @@ class DetailViewController: UIViewController {
         print("push demo \n")
         detailVC = DetailViewController()
 
-        self.navigationController.pushViewController(detailVC, animated: true)
+        self.navigationController?.pushViewController(detailVC!, animated: true);
     }
     
     func popBack(sender: UIButton){
         print("push demo \n")
-        self.navigationController.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func goBack(animated:Bool){        self.navigationController.popViewControllerAnimated(animated)
+    func goBack(animated:Bool){
+        self.navigationController?.popViewControllerAnimated(animated)
     }
     
     override func didReceiveMemoryWarning() {

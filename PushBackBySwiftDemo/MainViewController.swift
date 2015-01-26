@@ -20,7 +20,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "你好！"
-        self.view.backgroundColor = UIColor.whiteColor()!
+        self.view.backgroundColor = UIColor.whiteColor()
 
         let lab = UILabel(frame: CGRectMake(0, 64, ScreenWidth, 260))
         lab.backgroundColor = UIColor.grayColor()
@@ -54,7 +54,7 @@ class MainViewController: UIViewController {
         print("push demo \n")
         detailVC = DetailViewController()
         
-        self.navigationController.pushViewController(detailVC, animated: true)
+        self.navigationController?.pushViewController(detailVC!, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
