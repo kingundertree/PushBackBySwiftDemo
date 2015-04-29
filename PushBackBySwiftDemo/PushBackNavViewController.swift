@@ -53,7 +53,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
     }
 
     //pragma -mark UIGurstureDelegate
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer!, shouldReceiveTouch touch: UITouch!) -> Bool {
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         println("参数---->>\(self.capImageArr!.count)...\(self.disablePushBack)...\(self.isMoving)")
         if(self.capImageArr!.count < 1 ||
             self.disablePushBack ||
@@ -89,7 +89,7 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
                 self.backGroundImg?.removeFromSuperview()
             }
             
-            var img:UIImage = (self.capImageArr!.lastObject) as UIImage
+            var img:UIImage = (self.capImageArr!.lastObject) as! UIImage
             self.backGroundImg = UIImageView(image: img)
             self.backGroundImg!.frame = frame
             self.backGroundView?.insertSubview(self.backGroundImg, belowSubview: self.maskCover)
@@ -209,11 +209,11 @@ class PushBackNavViewController: UINavigationController,UIGestureRecognizerDeleg
         }
     }
     
-    func navigationController(navigationController: UINavigationController!, willShowViewController viewController: UIViewController!, animated: Bool) {
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
         self.disablePushBack = false
     }
     
-    func navigationController(navigationController: UINavigationController!, didShowViewController viewController: UIViewController!, animated: Bool) {
+    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
         self.isMoving = false
     }
     

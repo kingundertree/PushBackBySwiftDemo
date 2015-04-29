@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
         lab.textAlignment = NSTextAlignment.Center;
         self.view.addSubview(lab)
         
-        let btn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let btn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         btn.frame = CGRectMake(0, 360, ScreenWidth, 45);
         btn.backgroundColor = UIColor.blueColor()
         btn.setTitle("push next page", forState: UIControlState.Normal)

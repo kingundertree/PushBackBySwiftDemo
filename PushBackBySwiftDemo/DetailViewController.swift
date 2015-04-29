@@ -27,7 +27,7 @@ class DetailViewController: UIViewController {
         lab.textAlignment = NSTextAlignment.Center
         self.view.addSubview(lab)
         
-        let btn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let btn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         btn.frame = CGRectMake(0, 360, ScreenWidth, 45);
         btn.backgroundColor = UIColor.blueColor()
         btn.setTitle("push next page", forState: UIControlState.Normal)
@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
         btn.addTarget(self, action: "btnClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btn)
 
-        let bcakBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let bcakBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         bcakBtn.frame = CGRectMake(0, 420, ScreenWidth, 45);
         bcakBtn.backgroundColor = UIColor.blueColor()
         bcakBtn.setTitle("pop back", forState: UIControlState.Normal)
